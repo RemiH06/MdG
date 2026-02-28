@@ -1,0 +1,22 @@
+--------------------------------------------------------
+Preguntas a responder con la base de datos Movies
+--------------------------------------------------------
+
+1. ¿Cuántas películas hay en la base de datos?
+2. Lista de todas las películas con su año de lanzamiento.
+3. ¿Cuántos actores hay en la base de datos?
+4. ¿Cuántas personas han dirigido películas?
+5. ¿Qué actores han participado en la película The Matrix?
+
+6. ¿Cuál es el promedio de años de lanzamiento de las películas?
+7. Lista de directores con la cantidad de películas que han dirigido.
+8. Lista de actores con la cantidad de películas en las que han actuado.
+9. Obtener el actor que ha actuado en más películas.
+10. Obtener la persona con más relaciones en la base de datos.
+
+11. ¿Cuál es la película con más actores?
+12. Encontrar el camino más corto entre dos actores (ejemplo: Tom Hanks y Keanu Reeves).
+13. Obtener el año en el que se estrenaron más películas.
+14. Obtener el actor que ha trabajado con más directores diferentes.
+15. ¿Cuál es el actor con más co-actores diferentes?
+
