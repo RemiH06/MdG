@@ -1,0 +1,281 @@
+id_producto,Producto
+1,Adhesivos
+2,Agendas
+3,Álbumes de fotos
+4,Abrazaderas
+5,Anillas
+6,Anotadores
+7,Bolígrafo
+8,Borradores
+9,Bloc de notas
+10,Bloc de dibujo
+11,Carpetas
+12,Carpetas con anillas
+13,Cartulinas
+14,Cinta adhesiva
+15,Cinta de embalar
+16,Cinta métrica
+17,Clips
+18,Compás
+19,Corrector líquido
+20,Corrector en barra
+21,Cuadernos
+22,Cuadernos de espiral
+23,Cuadernos de anillas
+24,Cúter
+25,Divisores
+26,Documentos para fotocopiar
+27,Envelopes
+28,Etiquetas
+29,Estuches
+30,Estuches de lápices
+31,Escritorios
+32,Gomas de borrar
+33,Grapas
+34,Grapadora
+35,Hojas de papel
+36,Hojas A4
+37,Hojas perforadas
+38,Hojas de colores
+39,Hojas de scrapbooking
+40,Hojas para impresión
+41,Lápices
+42,Lápices de colores
+43,Marcadores
+44,Marcadores permanentes
+45,Marcadores fluorescentes
+46,Mica o funda para documentos
+47,Muestrarios
+48,Notas adhesivas
+49,Notas para escritorio
+50,Páginas adhesivas
+51,Pegamento en barra
+52,Pinceles
+53,Pizarras blancas
+54,Pizarras de corcho
+55,Pizarra magnética
+56,Planificadores
+57,Plastificadoras
+58,Plastificados
+59,Papel fotográfico
+60,Papel reciclado
+61,Papel para impresoras
+62,Papel bond
+63,Papel kraft
+64,Papel de embalar
+65,Papel de regalo
+66,Plegadoras
+67,Portafolios
+68,Portadocumentos
+69,Proyector
+70,Reloj de pared
+71,Regla
+72,Regla flexible
+73,Regla metálica
+74,Sacapuntas
+75,Sellos de caucho
+76,Sellos personalizados
+77,Típex
+78,Tijeras
+79,Tijeras de oficina
+80,Troqueles
+81,Troqueladoras
+82,Uñas postizas
+83,Almohadillas de tinta
+84,Aluminio adhesivo
+85,Almohadilla para sellos
+86,Adhesivo en spray
+87,Adhesivo para fotos
+88,Agujas para coser
+89,Álbum de notas
+90,Anotador de bolsillo
+91,Anotador de escritorio
+92,Apuntes
+93,Aplique para hojas
+94,Borrador en goma
+95,Caja organizadora
+96,Calendario de pared
+97,Calendario de mesa
+98,Carteles
+99,Carteles magnéticos
+100,Cinta métrica adhesiva
+101,Cinta para etiquetas
+102,Cinta de señalización
+103,Clip metálico
+104,Clip de plástico
+105,Clip para documentos grandes
+106,Clon de lápices
+107,Colores para marcar
+108,Cuaderno de recetas
+109,Cuaderno de notas
+110,Cuaderno de actividades
+111,Cuaderno con tapa dura
+112,Cuaderno de anillas grande
+113,Cuaderno personalizable
+114,Cuaderno de dibujo
+115,Cúter de precisión
+116,Doble cara adhesiva
+117,Documentos de seguridad
+118,Escritorio ergonómico
+119,Ficha técnica de producto
+120,Fichas de resumen
+121,Filtros para bolígrafo
+122,Filtros para marcadores
+123,Goma líquida para pegado
+124,Grapas grandes
+125,Grapas pequeñas
+126,Hojas para acuarela
+127,Hojas con cuadrícula
+128,Hojas en blanco
+129,Hojas en rayas
+130,Hojas con margen
+131,Hojas perforadas para anillas
+132,Hojas recicladas ecológicas
+133,Hojas para impresión de color
+134,Imprimibles para decoración
+135,Indicadores de página
+136,Lentes de aumento
+137,Marcadores de página
+138,Notas adhesivas grandes
+139,Notas adhesivas pequeñas
+140,Papel autoadhesivo
+141,Papel de cartón
+142,Papel corrugado
+143,Papel de aluminio
+144,Papel de cera
+145,Papel fotográfico adhesivo
+146,Papel para tarjetas
+147,Papel para scrapbooking
+148,Plegadora eléctrica
+149,Pluma fuente
+150,Pluma de tinta
+151,Punteros magnéticos
+152,Relojes de oficina
+153,Remaches
+154,Sellos autoentintables
+155,Sellos de madera
+156,Set de scrapbooking
+157,Set de manualidades
+158,Set de bolígrafos
+159,Set de marcadores
+160,Set de lápices de colores
+161,Tablón de anuncios
+162,Tablón magnético
+163,Tarjetas de presentación
+164,Tijeras de formas
+165,Troquel de etiquetas
+166,Troquel para formas geométricas
+167,Uñas adhesivas
+168,Abrazaderas de presión
+169,Adornos de escritorio
+170,Agitadores para pintura
+171,Album de recortes
+172,Almohadilla de tinta para sellos
+173,Ampolletas de tinta
+174,Andador de oficina
+175,Bate de papel para proyectos
+176,Bloc de dibujo artístico
+177,Borrador de pizarra
+178,Cajas de almacenamiento
+179,Cinta para regalo
+180,Cinta para presentar documentos
+181,Clip de oficina
+182,Compás de mecánica
+183,Cúter multifuncional
+184,Despacho en miniatura
+185,Etiquetadora
+186,Gomas para libros
+187,Hilo de coser
+188,Imán para escritorio
+189,Lente de lupa
+190,Luces de oficina
+191,Medidor de oficina
+192,Micrófono de oficina
+193,Nombres adhesivos
+194,Notas adhesivas transparentes
+195,Papel carbonado
+196,Papel madera reciclado
+197,Planchas de plastificado
+198,Planos de oficina
+199,Regla en espiral
+200,Rotuladores finos
+201,Rotuladores gruesos
+202,Sacapuntas eléctrico
+203,Sello notarial
+204,Sello para documentos legales
+205,Sello profesional
+206,Set de sellos decorativos
+207,Suministros para scrapbooking
+208,Tenedor para clips
+209,Termo para oficina
+210,Tóner para impresora
+211,Troqueladora de formas
+212,Caja de herramientas para oficina
+213,Caja de clips
+214,Caja de anillas
+215,Caja para bolígrafos
+216,Caja para lápices
+217,Cartelera
+218,Carpeta con etiquetas
+219,Carpeta de plástico
+220,Cartón para protección
+221,Cinta adhesiva para oficina
+222,Clip organizador
+223,Abrazaderas grandes
+224,Afilador de lápices
+225,Almohadilla para tinta
+226,Aluminio para oficina
+227,Álbum de fotos profesional
+228,Barra de pegamento
+229,Bolígrafo de gel
+230,Bolígrafo de tinta líquida
+231,Caja para carpetas
+232,Caja para papelería
+233,Carpeta con gomas
+234,Carteles informativos
+235,Cinta antideslizante
+236,Clip para papeles grandes
+237,Clips para oficina
+238,Clip para tarjetas
+239,Cuaderno para recetas
+240,Cuaderno con anillas pequeñas
+241,Cuaderno tamaño A5
+242,Cuaderno en espiral
+243,Cúter con seguro
+244,Dispenser de cinta
+245,Dispenser de pegamento
+246,Dispensador de etiquetas
+247,Disco duro para oficina
+248,Eslabones de metal
+249,Etiquetas removibles
+250,Estuche con lápices
+251,Estuche para bolígrafos
+252,Fichero para documentos
+253,Fichero para tarjetas
+254,Fijador para tinta
+255,Folios de colores
+256,Grapadora de mano
+257,Grapadora eléctrica
+258,Grapadora con clips grandes
+259,Grapas para máquina
+260,Hojas para escritura
+261,Hojas para caligrafía
+262,Hoja con perforación doble
+263,Imán para notas
+264,Imperdibles
+265,Lámpara de escritorio
+266,Lentes para computadora
+267,Libretas para notas
+268,Marcadores de pizarra
+269,Marcadores para CD
+270,Manta para oficina
+271,Notas de colores
+272,Papel para cartas
+273,Papel para estampillas
+274,Papel reciclado para fotocopias
+275,Papel sintético
+276,Plumones para marcadores
+277,Porta lápices de madera
+278,Portaminas
+279,Portapapeles
+280,Portasellos
