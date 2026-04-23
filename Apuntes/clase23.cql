@@ -17,7 +17,7 @@ CALL gds.graph.project(
 
 // Directed
 CALL gds.graph.project(
-    'mDG2',
+    'mDG3',
     'Villian',
     {COMPANION:
         {
@@ -72,6 +72,48 @@ RETURN i;
 
 // paso 4
 MATCH(source:Villian{Name:'Ultron'})-[r:shortestPath_dijkstra_d_Ultron_Cheetah]->(ov:Villian{Name:'Cheetah'})
+WHERE r.nodeIds IS NOT NULL AND size(r.nodeIds)>=2
+WITH [id IN r.nodeIds | gds.util.asNode(id)] AS Nodes
+UNWIND range(0, size(Nodes)-2) as i
+WITH Nodes, Nodes[i] AS n1, Nodes[i+1] AS n2
+MATCH (n1)-[rel:COMPANION]->(n2)
+RETURN n1, rel, n2;
+
+//? EL EJEMPLO
+
+// Directed
+CALL gds.graph.project(
+    'mUG3',
+    'Villian',
+    {COMPANION:
+        {
+            orientation: 'UNDIRECTED',
+            properties: 'Weight'
+        }
+    }
+);
+
+// Dirigido. Flash Rebirth y Deathstroke
+MATCH(source:Villian {Name:'Flash Rebirth'})
+MATCH(target:Villian {Name:'Deathstroke'})
+CALL gds.shortestPath.dijkstra.write('mUG3',
+{
+    sourceNode: source,
+    targetNodes: target,
+    relationshipWeightProperty: 'Weight',
+    writeRelationshipType: 'dijkstra_d',
+    writeNodeIds: true,
+    writeCosts: true
+}
+)
+YIELD relationshipsWritten
+RETURN relationshipsWritten;
+
+// Muestra la nueva relación
+MATCH(n)-[r:dijkstra_d]->(m)
+RETURN n,r,m;
+
+MATCH(source:Villian{Name:'Flash Rebirth'})-[r:dijkstra_d]->(ov:Villian{Name:'Deathstroke'})
 WHERE r.nodeIds IS NOT NULL AND size(r.nodeIds)>=2
 WITH [id IN r.nodeIds | gds.util.asNode(id)] AS Nodes
 UNWIND range(0, size(Nodes)-2) as i
