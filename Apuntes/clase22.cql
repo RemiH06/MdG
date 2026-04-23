@@ -51,3 +51,12 @@ CALL gds.allShortestPaths.delta.write('mDG',
 })
 YIELD relationshipsWritten
 RETURN relationshipsWritten;
+
+// Consulta de Lex Luthor a Grodd
+MATCH (v:Villian{Name:'Lex Luthor'})-[r:PATH_Lex_Luthor_Undirected]->(ov:Villian{Name:'Grodd'})
+RETURN r,v,ov;
+
+// Todos los nodos recorridos
+MATCH(v:Villian)
+WHERE id(v) IN [24,38,27,36,35]
+RETURN v.Name, id(v);
