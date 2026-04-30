@@ -1,0 +1,77 @@
+-------------------------------------------------------------------------------------------------
+Instalación de Python
+-------------------------------------------------------------------------------------------------
+
+1) Entra a https://www.python.org/downloads/
+2) Elige la versión Python 3.14.4
+3) Al abrir el instalador selecciona la opción "Add python.exe to PATH"
+4) Elige la instalación "Customize intallation"
+5) En "Optional Features# selecciona todas menos "for all users(requires admin privileges)"
+6) En "Advanced Options" elige 
+	"Associate files with Python..."
+	"Create shortcuts for installed aplications"
+	"Add Python to environment variables"
+7) Finalmente oprime el botón "Install"
+
+-------------------------------------------------------------------------------------------------
+Ambientes virtuales 
+-------------------------------------------------------------------------------------------------
+
+Crear el ambiente virtual
+1) Abre Windows Powershell
+2) Cambiate a C:\Temp
+3) Crea el ambiente virtual con nombre ".virtualMDG"
+	python -m venv .virtualMDG
+4) Te creará un directorio con el nombre del ambiente virtual en la carpeta C:\Temp
+5) Activa el ambiente virtual 
+	Teclea CD C:\Temp\.virtualMDG\Scripts
+	Teclea activate
+	
+6) Si quieres cerrar el ambiente vitual 
+	Teclea CD C:\Temp\.virtualMDG\Scripts
+	Teclea deactivate
+
+-------------------------------------------------------------------------------------------------
+Para instalar todos los paquetes del archivo "requirements.txt" en tu ambiente virtual activo
+-------------------------------------------------------------------------------------------------
+
+1) Actualiza pip en tu ambiente virtual 
+python -m pip install --upgrade pip
+
+2) Instala los paquetes reqeuridos
+pip install -r requirements.txt
+
+3) Verifica los paquetes instalados
+pip list
+
+4) Si quieres enviar todos los paquetes instalados a un archivo 
+pip freeze > requirements.txt
+
+
+-------------------------------------------------------------------------------------------------
+En Visual Studio Code
+-------------------------------------------------------------------------------------------------
+
+1) Crea un archivo con el nombre driverPythonNeo4j.ipynb
+2) Seleccionar Kernel: Al abrir el archivo .ipynb, asegúrate de seleccionar el intérprete 
+   de Python que corresponde a tu ambiente virtual (.virtualMDG) en la esquina superior derecha de VS Code.
+3) Busca el arhivo de canvas con el nombre driver_python_neo4j.html y sigue paso a paso el contenido
+
+
+Si al intentar seleccionar el Kernel no visualizas .virtualMDG, sigue estos pasos:
+
+1) Abre el Selector de Kernel: Haz clic en el botón de la esquina superior derecha que dice "Select Kernel" (o donde aparece la versión de Python actual).
+
+2) Selecciona otra opción: En el menú desplegable que aparece al centro de la pantalla, elige "Select Another Kernel...".
+
+3) Tipo de Intérprete: Selecciona la opción "Python Environments".
+
+4) Buscar en el disco: Haz clic en la opción "+ Create or Enter Interpreter Path..." y luego selecciona "Find...".
+
+5) Localiza el ejecutable: Se abrirá el explorador de archivos. Debes navegar hasta la siguiente ruta:
+
+	Ve a C:\Temp\.virtualMDG\Scripts\
+
+6) Busca y selecciona el archivo llamado python.exe.
+
+7) Confirmar: Una vez seleccionado, VS Code reconocerá el ambiente y podrás ejecutar las celdas de tu Notebook usando las librerías instaladas en .virtualMDG.
