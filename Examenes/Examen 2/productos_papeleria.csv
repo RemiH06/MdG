@@ -1,0 +1,230 @@
+IDP,Nombre
+1,Lápiz estándar
+2,Lápiz profesional
+3,Lápiz escolar
+4,Lápiz premium
+5,Bolígrafo estándar
+6,Bolígrafo profesional
+7,Bolígrafo escolar
+8,Bolígrafo premium
+9,Pluma estándar
+10,Pluma profesional
+11,Pluma escolar
+12,Pluma premium
+13,Borrador estándar
+14,Borrador profesional
+15,Borrador escolar
+16,Borrador premium
+17,Sacapuntas estándar
+18,Sacapuntas profesional
+19,Sacapuntas escolar
+20,Sacapuntas premium
+21,Regla estándar
+22,Regla profesional
+23,Regla escolar
+24,Regla premium
+25,Tijeras estándar
+26,Tijeras profesional
+27,Tijeras escolar
+28,Tijeras premium
+29,Cuaderno estándar
+30,Cuaderno profesional
+31,Cuaderno escolar
+32,Cuaderno premium
+33,Libreta estándar
+34,Libreta profesional
+35,Libreta escolar
+36,Libreta premium
+37,Agenda estándar
+38,Agenda profesional
+39,Agenda escolar
+40,Agenda premium
+41,Carpeta estándar
+42,Carpeta profesional
+43,Carpeta escolar
+44,Carpeta premium
+45,Archivador estándar
+46,Archivador profesional
+47,Archivador escolar
+48,Archivador premium
+49,Separador estándar
+50,Separador profesional
+51,Separador escolar
+52,Separador premium
+53,Grapadora estándar
+54,Grapadora profesional
+55,Grapadora escolar
+56,Grapadora premium
+57,Grapas estándar
+58,Grapas profesional
+59,Grapas escolar
+60,Grapas premium
+61,Clips estándar
+62,Clips profesional
+63,Clips escolar
+64,Clips premium
+65,Portaminas estándar
+66,Portaminas profesional
+67,Portaminas escolar
+68,Portaminas premium
+69,Marcador estándar
+70,Marcador profesional
+71,Marcador escolar
+72,Marcador premium
+73,Resaltador estándar
+74,Resaltador profesional
+75,Resaltador escolar
+76,Resaltador premium
+77,Corrector estándar
+78,Corrector profesional
+79,Corrector escolar
+80,Corrector premium
+81,Pegamento estándar
+82,Pegamento profesional
+83,Pegamento escolar
+84,Pegamento premium
+85,Cinta adhesiva estándar
+86,Cinta adhesiva profesional
+87,Cinta adhesiva escolar
+88,Cinta adhesiva premium
+89,Papel bond estándar
+90,Papel bond profesional
+91,Papel bond escolar
+92,Papel bond premium
+93,Papel reciclado estándar
+94,Papel reciclado profesional
+95,Papel reciclado escolar
+96,Papel reciclado premium
+97,Papel de colores estándar
+98,Papel de colores profesional
+99,Papel de colores escolar
+100,Papel de colores premium
+101,Cartulina estándar
+102,Cartulina profesional
+103,Cartulina escolar
+104,Cartulina premium
+105,Sobre estándar
+106,Sobre profesional
+107,Sobre escolar
+108,Sobre premium
+109,Post-it estándar
+110,Post-it profesional
+111,Post-it escolar
+112,Post-it premium
+113,Bloc de notas estándar
+114,Bloc de notas profesional
+115,Bloc de notas escolar
+116,Bloc de notas premium
+117,Pizarra blanca estándar
+118,Pizarra blanca profesional
+119,Pizarra blanca escolar
+120,Pizarra blanca premium
+121,Marcador para pizarra estándar
+122,Marcador para pizarra profesional
+123,Marcador para pizarra escolar
+124,Marcador para pizarra premium
+125,Borrador para pizarra estándar
+126,Borrador para pizarra profesional
+127,Borrador para pizarra escolar
+128,Borrador para pizarra premium
+129,Calculadora estándar
+130,Calculadora profesional
+131,Calculadora escolar
+132,Calculadora premium
+133,Compás estándar
+134,Compás profesional
+135,Compás escolar
+136,Compás premium
+137,Transportador estándar
+138,Transportador profesional
+139,Transportador escolar
+140,Transportador premium
+141,Escuadra estándar
+142,Escuadra profesional
+143,Escuadra escolar
+144,Escuadra premium
+145,Regla metálica estándar
+146,Regla metálica profesional
+147,Regla metálica escolar
+148,Regla metálica premium
+149,Regla flexible estándar
+150,Regla flexible profesional
+151,Regla flexible escolar
+152,Regla flexible premium
+153,Lápiz de color estándar
+154,Lápiz de color profesional
+155,Lápiz de color escolar
+156,Lápiz de color premium
+157,Crayones estándar
+158,Crayones profesional
+159,Crayones escolar
+160,Crayones premium
+161,Plastilina estándar
+162,Plastilina profesional
+163,Plastilina escolar
+164,Plastilina premium
+165,Papel milimétrico estándar
+166,Papel milimétrico profesional
+167,Papel milimétrico escolar
+168,Papel milimétrico premium
+169,Papel mantequilla estándar
+170,Papel mantequilla profesional
+171,Papel mantequilla escolar
+172,Papel mantequilla premium
+173,Papel fotográfico estándar
+174,Papel fotográfico profesional
+175,Papel fotográfico escolar
+176,Papel fotográfico premium
+177,Folder estándar
+178,Folder profesional
+179,Folder escolar
+180,Folder premium
+181,Protector de hojas estándar
+182,Protector de hojas profesional
+183,Protector de hojas escolar
+184,Protector de hojas premium
+185,Tarjetero estándar
+186,Tarjetero profesional
+187,Tarjetero escolar
+188,Tarjetero premium
+189,Lapicera estándar
+190,Lapicera profesional
+191,Lapicera escolar
+192,Lapicera premium
+193,Portadocumentos estándar
+194,Portadocumentos profesional
+195,Portadocumentos escolar
+196,Portadocumentos premium
+197,Pegamento en barra estándar
+198,Pegamento en barra profesional
+199,Pegamento en barra escolar
+200,Pegamento en barra premium
+201,Hojas blancas tamaño carta
+202,Hojas de color tamaño carta
+203,Hojas tamaño oficio
+204,Hojas recicladas
+205,Paquete de papel bond
+206,Tóner para impresora láser
+207,Cartucho de tinta negra
+208,Cartucho de tinta color
+209,Papel para impresora inkjet
+210,Papel para impresora láser
+211,Portafolios de mano
+212,Mochila escolar
+213,Estuche para lápices
+214,Caja organizadora
+215,Bandeja para documentos
+216,Porta clips
+217,Dispensador de cinta
+218,Dispensador de grapas
+219,Sello fechador
+220,Sello autoentintable
+221,Almohadilla para sellos
+222,Papel térmico
+223,Rollo de papel térmico
+224,Rollo para calculadora
+225,Papel continuo
+226,Etiquetas adhesivas
+227,Etiquetas para impresora
+228,Cubierta de plástico
+229,Mica transparente
