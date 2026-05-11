@@ -1,0 +1,1230 @@
+Diferencias
+
+| #   | Relacionales                                              | No relacionales                                                                  |
+| --- | --------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| 1   | ACID (atomicidad, consistencia, integridad y durabilidad) | CAP (consistencia, disponibilidad, tolerancia  y particiones)                    |
+| 2   | SQL como lenguaje declarativo de alto nivel para todos    | No existe un lenguaje declarativo único que pueda usarse con todas las BD No-SQL |
+| 3   | Almacena información estructurada                         | Almacena información estructurada, semiestructurada y no estructurada            |
+| 4   | Crecimiento vertical                                      | Crecimiento horizontal                                                           |
+
+![[Pasted image 20260119143447.png]]
+
+Van Bruggen, R. (2014), Graph Data Science with Python and Neo4j
+
+G = (V(G), E(G))
+
+V(G) = {v1, v2, v3, ...}
+
+E(G) = {e1, e2, e3, ...}
+
+
+G = (V, E)
+Vértices, nodos, aristas
+![[Pasted image 20260119143933.png]]
+
+Los grafos tienen una matriz de adyacencia que está ligada a las relaciones entre sus nodos. Los grafos no dirigidos tienen matriz de adyacencia simétrica.
+Dado el grafo completar la matriz (el grafo estaba en el proyector)
+
+| #   | A   | B   | C   | D   | E   | F   | G   |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A   | 0   | 0   | 1   | 0   | 0   | 1   | 0   |
+| B   | 0   | 0   | 1   | 1   | 0   | 0   | 0   |
+| C   | 0   | 0   | 0   | 0   | 0   | 1   | 0   |
+| D   | 1   | 0   | 0   | 0   | 1   | 1   | 0   |
+| E   | 0   | 1   | 0   | 1   | 0   | 0   | 0   |
+| F   | 0   | 0   | 0   | 1   | 0   | 0   | 0   |
+| G   | 0   | 1   | 0   | 0   | 1   | 0   | 0   |
+
+Lista de adyacencia
+A [C,F]
+B [C,D]
+C [F]
+D [A,E,F]
+E [B,D]
+F [D]
+G [B,E]
+
+Pares ordenados
+(A,C), (A,F), (B,C), (B,D), (C,F), (D,A), (D,E), (D,F), (E,B), (E,D), (F,D), (G,B), (G,E)
+
+Un grafo homogéneo es uno en el que todos los nodos y relaciones son de los mismos tiposCREATE DATABASE lunes
+
+Nodos '( )'
+(:label)
+(:Producto)
+(:PRODUCTO)
+(:proDucto)
+
+Relaciones '--'
+'-->'
+'<--'
+'-[]-'
+'-[:AMIGO]-'
+'-[:AMIGO]->'
+'<-[:AMIGO]-'
+
+Propiedades {}
+clase:valor
+{nombre:'Juan'}
+{edad:25}
+{nombre:'Juan', edad:25}
+
+CREATE(:estudiante{nombre:'Juan'});// Relaciones
+
+// -- -[]- --> <-- -[]-> <-[]-
+
+  
+
+// Propiedades
+
+// {}
+
+  
+
+// Crea un
+
+CREATE (n:Persona{nombre:'Remi'});
+
+  
+
+// SET
+
+MATCH (n:Persona{nombre:'Remi'})
+
+SET n.apellido = 'Heredia';
+
+  
+
+// REMOVE
+
+MATCH (n:Persona{nombre:'Remi'})
+
+REMOVE n.apellido;
+
+  
+
+// SQL      Similar     Orden Cypher
+
+// SELECT   RETURN      MATCH
+
+// FROM     MATCH       WHERE
+
+// WHERE    WHERE       RETURN
+
+  
+
+// Crear compu
+
+CREATE (c:Compu{nombre:'Gabinete1'});
+
+  
+
+MATCH (c:Compu{nombre:'Gabinete1'})
+
+CREATE (t:Compu{nombre:'Teclado1'})-[r:SE_CONECTA]->(c);
+
+MATCH (c:Compu{nombre:'Gabinete1'})
+
+CREATE (m:Compu{nombre:'Mouse1'})-[r:SE_CONECTA]->(c);
+
+MATCH (c:Compu{nombre:'Gabinete1'})
+
+CREATE (p:Compu{nombre:'Monitor1'})-[r:SE_CONECTA]->(c);
+
+  
+  
+
+// Conocidos
+
+MATCH (n:Persona{nombre:'Remi'})
+
+RETURN n;
+
+  
+
+MATCH (n:Persona{nombre:'Remi'})
+
+CREATE (p:Persona{nombre:'Ivo'})<-[r:CONOCE]-(n);
+
+MATCH (n:Persona{nombre:'Remi'})
+
+CREATE (p:Persona{nombre:'Max'})<-[r:CONOCE]-(n);
+
+MATCH (n:Persona{nombre:'Remi'})
+
+CREATE (p:Persona{nombre:'Aissa'})<-[r:CONOCE]-(n);
+
+MATCH (n:Persona{nombre:'Remi'})
+
+CREATE (p:Persona{nombre:'Ivan'})<-[r:CONOCE]-(n);// Closeness centrality
+
+// 1. Crear subgrafo
+CALL gds.graph.project(
+    'MyGraph',
+    'Villian',
+    'COMPANION',
+    {relationshipProperties:'Weight'}
+);
+
+// 2. Cálculo de memoria
+CALL gds.closeness.stream.estimate('MyGraph', {})
+YIELD nodeCount, relationshipCount, bytesMin, bytesMax, requiredMemory;
+
+// 3. Aplicar el algoritmo
+
+
+// 4. Incluir el atributo ********
+CALL gds.closeness.write('MyGraph', {writeProperty: 'closeness_centrality'})
+YIELD centralityDistribution, nodePropertiesWritten
+RETURN  centralityDistribution.min AS minimumScore,
+        centralityDistribution.mean AS meanScore,
+        nodePropertiesWritten;
+
+// comprobación
+MATCH (v:Villian)
+RETURN v.Name, v.closeness_centrality
+ORDER BY v.closeness_centrality DESC;
+
+// AHORA CON LOS HÉROES
+
+// 1. Crear subgrafo
+CALL gds.graph.project(
+    'grafoHeroes',
+    'SuperHero',
+    'FRIEND_OF',
+    {relationshipProperties:'Weight'}
+);
+
+// 2. Cálculo de memoria
+CALL gds.closeness.stream.estimate('grafoHeroes', {})
+YIELD nodeCount, relationshipCount, bytesMin, bytesMax, requiredMemory;
+
+// 3. Aplicar el algoritmo
+
+
+// 4. Incluir el atributo ********
+CALL gds.closeness.write('grafoHeroes', {writeProperty: 'closeness_centrality'})
+YIELD centralityDistribution, nodePropertiesWritten
+RETURN  centralityDistribution.min AS minimumScore,
+        centralityDistribution.mean AS meanScore,
+        nodePropertiesWritten;
+
+// comprobación
+MATCH (h:SuperHero)
+RETURN h.Name, h.closeness_centrality
+ORDER BY h.closeness_centrality DESC;// 1. Crear el subgrafo no dirigido
+CALL gds.graph.project(
+    'MyUndirectedGraph',
+    'Villian',
+    {COMPANION:
+        {
+            Orientation: 'UNDIRECTED',
+            Properties: 'Weight'
+        }
+    }
+);
+
+// 4. Incluir el atributo articulationPoint
+CALL gds.articulationPoints.write(
+    'MyUndirectedGraph',
+    {writeProperty: 'ArticulationPoint'}
+)
+YIELD articulationPointCount
+
+// Consulta por villano
+MATCH (v:Villian)
+RETURN v.Name, v.articulationPoint
+ORDER BY v.articulationPoint DESC;// esquema
+CALL db.schema.visualization;
+
+// grafo
+MATCH (p)-[r]-(q)
+RETURN p,r,q;
+
+// nombres de villanos
+MATCH (v:Villian)
+RETURN v.Name
+
+// SUBGRAFOS
+
+// Dirigido NATURAL
+CALL gds.graph.project(
+    'MyNaturalGraph',
+    'Villian',
+    {COMPANION:
+    {
+        orientation: 'NATURAL',
+        properties: 'Weight'
+    }}
+)
+
+
+// Dirigido REVERSE
+CALL gds.graph.project(
+    'MyReverseGraph',
+    'Villian',
+    {COMPANION:
+    {
+        orientation: 'REVERSE',
+        properties: 'Weight'
+    }}
+)
+
+// No dirigido UNDIRECTED
+CALL gds.graph.project(
+    'MyUndirectedGraph',
+    'Villian',
+    {COMPANION:
+    {
+        orientation: 'UNDIRECTED',
+        properties: 'Weight'
+    }}
+)
+
+// Lista los subgrafos
+CALL gds.graph.list()
+YIELD graphName
+RETURN graphName;
+
+// Eliminar grafos
+CALL gds.graph.drop('MyNaturalGraph')
+CALL gds.graph.drop('MyReverseGraph')
+CALL gds.graph.drop('MyUndirectedGraph')
+
+
+
+// Añadir atributos
+CALL gds.NOMBRE_DEL_ALGORITMO.write(
+    'Nombre_del_subgrafo',
+    {writeProperty: 'Nombre_del_atributo'}
+)
+YIELD centralityDistribution, nodePropertiesWritten;
+
+// Degree
+CALL gds.degree.write('MyUndirectedGraph', {
+    writeProperty: 'degree_centrality'
+})
+YIELD centralityDistribution, nodePropertiesWritten
+RETURN 'degree' AS metric, centralityDistribution.min AS minimumScore, 
+       centralityDistribution.mean AS meanScore, nodePropertiesWritten;
+
+// InDegree
+CALL gds.degree.write('MyUndirectedGraph', {
+    writeProperty: 'indegree_centrality',
+    orientation: 'REVERSE'
+})
+YIELD centralityDistribution, nodePropertiesWritten
+RETURN 'indegree' AS metric, centralityDistribution.min AS minimumScore, 
+       centralityDistribution.mean AS meanScore, nodePropertiesWritten;
+
+// OutDegree
+CALL gds.degree.write('MyUndirectedGraph', {
+    writeProperty: 'outdegree_centrality',
+    orientation: 'NATURAL'
+})
+YIELD centralityDistribution, nodePropertiesWritten
+RETURN 'outdegree' AS metric, centralityDistribution.min AS minimumScore, 
+       centralityDistribution.mean AS meanScore, nodePropertiesWritten;
+
+
+// PageRank
+CALL gds.pageRank.write(
+    'MyUndirectedGraph',
+    {
+        writeProperty: 'pageRank',
+        maxIterations: 20,
+        dampingFactor: 0.85
+    }
+)
+YIELD nodePropertiesWritten, ranIterations;
+
+
+// Betweenness Centrality
+CALL gds.betweenness.write(
+    'MyUndirectedGraph', {writeProperty: 'betweenness_centrality'}
+)
+YIELD centralityDistribution, nodePropertiesWritten
+RETURN centralityDistribution.min AS minimumScore, 
+       centralityDistribution.mean AS meanScore, 
+       nodePropertiesWritten;
+
+
+// Closeness Centrality (tu código original adaptado)
+CALL gds.closeness.write(
+    'MyUndirectedGraph', {writeProperty: 'closeness_centrality'}
+)
+YIELD centralityDistribution, nodePropertiesWritten
+RETURN  centralityDistribution.min AS minimumScore,
+        centralityDistribution.mean AS meanScore,
+        nodePropertiesWritten;
+
+
+// Articulation Points (puntos de articulación)
+CALL gds.articulationPoints.write(
+    'MyUndirectedGraph',
+    {writeProperty: 'ArticulationPoint'}
+)
+YIELD articulationPointCount// Subgrafo no dirigido
+CALL gds.graph.project(
+    'myGraph',
+    'Villian',
+    {COMPANION: {orientation:'UNDIRECTED'}}
+);
+
+// Louvain
+CALL gds.louvain.write('myGraph', {writeProperty: 'louvain'})
+YIELD communityCount, modularity, modularities;
+
+
+//? VILLIAN
+// Subgrafo dirigido con pesos
+CALL gds.graph.project(
+    'myDirectedWeightedGraph',
+    'Villian',
+    {COMPANION: {orientation:'NATURAL', properties: 'Weight'}}
+);
+
+// Comunidades intermedias
+CALL gds.louvain.stream('myDirectedWeightedGraph', {includeIntermediateCommunities: true})
+YIELD nodeId, communityId, intermediateCommunityIds
+RETURN gds.util.asNode(nodeId).Name AS name, communityId, intermediateCommunityIds
+ORDER BY communityId ASC, intermediateCommunityIds ASC, name ASC;
+
+// Añadiendo un nuevo atributo
+CALL gds.louvain.write('myDirectedWeightedGraph', {writeProperty: 'louvainDirectedGraph'})
+YIELD communityCount, modularity, modularities;
+
+
+//? SUPERHERO
+// Subgrafo dirigido con pesos
+CALL gds.graph.project(
+    'myDirectedWeightedGraph2',
+    'SuperHero',
+    {FRIEND_OF: {orientation:'NATURAL', properties: 'Weight'}}
+);
+
+// Comunidades intermedias
+CALL gds.louvain.stream('myDirectedWeightedGraph2', {includeIntermediateCommunities: true})
+YIELD nodeId, communityId, intermediateCommunityIds
+RETURN gds.util.asNode(nodeId).Name AS name, communityId, intermediateCommunityIds
+ORDER BY communityId ASC, intermediateCommunityIds ASC, name ASC;
+
+// Añadiendo un nuevo atributo
+CALL gds.louvain.write('myDirectedWeightedGraph2', {writeProperty: 'louvainDirectedGraph'})
+YIELD communityCount, modularity, modularities;
+
+
+//? K-1 Coloring
+// Subgrafo no dirigido
+CALL gds.graph.project(
+    'uG',
+    'Villian',
+    {COMPANION: {orientation: 'UNDIRECTED'}}
+);
+
+// Escribimos K-1 como atributo
+CALL gds.k1coloring.write('uG', {writeProperty: 'K1color'})
+YIELD nodeCount, colorCount, ranIterations, didConverge;
+
+// Ya que el CERO causa problemas para aplicar una regla en bloom actualizamos los datos
+MATCH (v:Villian)
+SET v.K1color = v.K1color+1
+RETURN v.K1color as Color, COUNT(v.Name) AS NumIntegrantes, COLLECT(v.Name) as Integrantes
+ORDER BY COUNT(v.Name), v.K1color;
+
+// Subgrafo no dirigido
+CALL gds.graph.project(
+    'uG2',
+    'SuperHero',
+    {FRIEND_OF: {orientation: 'UNDIRECTED'}}
+);
+
+// Escribimos K-1 como atributo
+CALL gds.k1coloring.write('uG2', {writeProperty: 'K1color'})
+YIELD nodeCount, colorCount, ranIterations, didConverge;
+
+// Ya que el CERO causa problemas para aplicar una regla en bloom actualizamos los datos
+MATCH (sh:SuperHero)
+SET sh.K1color = sh.K1color+1
+RETURN sh.K1color as Color, COUNT(sh.name) AS NumIntegrantes, COLLECT(sh.name) as Integrantes
+ORDER BY COUNT(sh.name), sh.K1color;//? WCC
+// 1. Crear un subgrafo
+CALL gds.graph.project(
+    'mUG',
+    'Villian',
+    {COMPANION: {orientation: 'UNDIRECTED', properties: 'Weight'}}
+)
+
+// 4. Alterar la estructura del grafo
+CALL gds.wcc.write(
+    'mUG',
+    {writeProperty: 'communityWCC'}
+)
+YIELD componentCount, componentDistribution
+
+// Villanos por comunidad
+MATCH (v:Villian)
+RETURN v.communityWCC, COUNT(v.Name), collect(v.Name)
+ORDER BY COUNT(v.Name) DESC
+
+// Actualizar las comunidades para eliminar el CERO y ver en bloom
+MATCH(v:Villian)
+SET v.communityWCC = v.communityWCC+1
+RETURN v.communityWCC, COUNT(v.Name), collect(v.Name)
+ORDER BY COUNT(v.Name) DESC
+
+
+//? SCC
+// 1. Crear un subgrafo
+CALL gds.graph.project(
+    'mG',
+    'Villian',
+    {COMPANION: {properties: 'Weight'}}
+)
+
+// 4. Alterar la estructura del grafo
+CALL gds.scc.write(
+    'mG',
+    {writeProperty: 'communitySCC'}
+)
+YIELD componentCount, componentDistribution
+
+// Villanos por comunidad
+MATCH (v:Villian)
+RETURN v.communitySCC, COUNT(v.Name), collect(v.Name)
+ORDER BY COUNT(v.Name) DESC
+
+// Actualizar las comunidades para eliminar el CERO y ver en bloom
+MATCH(v:Villian)
+SET v.communitySCC = v.communitySCC+1
+RETURN v.communitySCC, COUNT(v.Name), collect(v.Name)
+ORDER BY COUNT(v.Name) DESC
+
+//? label propagation
+CALL gds.labelPropagation.write('mG', {writeProperty: 'labelPropagation'})
+YIELD communityCount, ranIterations, didConverge;
+
+MATCH (v:Villian)
+RETURN v.labelPropagation, COUNT(v.Name), COLLECT(v.Name)
+ORDER BY COUNT(v.Name) DESC, v.labelPropagation
+
+
+//? Añadimos una restricción iniciando con la semilla de Joker
+MATCH (v:Villian)
+WHERE v.Name = 'Joker'
+SET v.comunidadInicial = v.labelPropagation
+
+// Subgrafo con la nueva semilla
+CALL gds.graph.project(
+    'mAG',
+    'Villian',
+    {COMPANION: {orientation: 'UNDIRECTED'}},
+    {nodeProperties: ['comunidadInicial']}
+)
+
+// Añadir el atributo con la semilla Joker
+CALL gds.labelPropagation.write('mAG',{
+    seedProperty: 'comunidadInicial',
+    writeProperty: 'labelPropagationSeed'
+})
+YIELD communityCount, ranIterations, didConverge// Recomienda buscando en todas las órdenes los demás productos
+MATCH (p:Product)<-[r:ORDERS]-(o:Order)-[r2:ORDERS]->(op:Product)
+WHERE p.productName = 'Chai'
+RETURN p.productName, COUNT(o.orderID) as cuantocuantocuanto, op.productName, COLLECT(o.orderID) as lista
+ORDER BY cuantocuantocuanto DESC;
+
+// Recomienda buscando en todas las órdenes los demás productos de la misma categoría
+MATCH (c1:Category)<-[]-(p1:Product)<-[r:ORDERS]-(o:Order)-[r2:ORDERS]->(p2:Product)-[]->(c2:Category)
+WHERE p1.productName = 'Chai' AND c1.categoryID = c2.categoryID
+RETURN p1.productName, COUNT(o.orderID) as cuantocuantocuanto, p2.productName, c1.categoryName, COLLECT(o.orderID) as lista
+ORDER BY cuantocuantocuanto DESC;
+
+// Recomienda buscando en todas las órdenes los demás productos del mismo proveedor
+MATCH (s1:Supplier)-[]->(p1:Product)<-[r:ORDERS]-(o:Order)-[r2:ORDERS]->(p2:Product)<-[]-(s2:Supplier)
+WHERE p1.productName = 'Chai' AND s1.supplierID = s2.supplierID
+RETURN p1.productName, COUNT(o.orderID) as cuantocuantocuanto, p2.productName, s1.companyName, COLLECT(o.orderID) as lista
+ORDER BY cuantocuantocuanto DESC;
+
+// Recomienda buscando en todas las órdenes los demás productos de un solo cliente
+MATCH (p1:Product)<--(o:Order)-->(p2:Product)
+MATCH (o:Order)<--(c:Customer)
+WHERE p1.productName = 'Chang' AND c.companyName = "Save-a-lot Markets"
+RETURN p1.productName, COUNT(o.orderID) as cuantocuantocuanto, p2.productName, COLLECT(o.orderID) as lista
+ORDER BY cuantocuantocuanto DESC;// Undirected
+CALL gds.graph.project(
+    'mUG',
+    'Villian',
+    {COMPANION:
+        {
+            orientation: 'UNDIRECTED',
+            properties: 'Weight'
+        }
+    }
+);
+
+// Directed
+CALL gds.graph.project(
+    'mDG',
+    'Villian',
+    {COMPANION:
+        {
+            orientation: 'NATURAL',
+            properties: 'Weight'
+        }
+    }
+);
+
+// Lista los subgrafos creados
+CALL gds.graph.list()
+YIELD grahpName, nodeCount, relationshipCount, database, creationTime;
+
+// Lex Luthor Undirected
+MATCH (source:Villian{Name:'Lex Luthor'})
+CALL gds.allShortestPaths.delta.write('myUndirectedGraph',
+{
+    sourceNode: source,
+    relationshipWeightProperty: 'Weight',
+    writeRelationshipType:'PATH_Lex_Luthor_Undirected',
+    writeNodeIds: true,
+    writeCosts: true
+})
+YIELD relationshipsWritten
+RETURN relationshipsWritten;
+
+// Lex Luthor Directed
+MATCH (source:Villian{Name:'Lex Luthor'})
+CALL gds.allShortestPaths.delta.write('mDG',
+{
+    sourceNode: source,
+    relationshipWeightProperty: 'Weight',
+    writeRelationshipType:'PATH_Lex_Luthor',
+    writeNodeIds: true,
+    writeCosts: true
+})
+YIELD relationshipsWritten
+RETURN relationshipsWritten;
+
+// Consulta de Lex Luthor a Grodd
+MATCH (v:Villian{Name:'Lex Luthor'})-[r:PATH_Lex_Luthor_Undirected]->(ov:Villian{Name:'Grodd'})
+RETURN r,v,ov;
+
+// Todos los nodos recorridos
+MATCH(v:Villian)
+WHERE id(v) IN [24,38,27,36,35]
+RETURN v.Name, id(v);MATCH(v:Villian)
+RETURN v.Name;
+
+call db.schema.visualization;
+
+// Undirected
+CALL gds.graph.project(
+    'mUG2',
+    'Villian',
+    {COMPANION:
+        {
+            orientation: 'UNDIRECTED',
+            properties: 'Weight'
+        }
+    }
+);
+
+// Directed
+CALL gds.graph.project(
+    'mDG3',
+    'Villian',
+    {COMPANION:
+        {
+            orientation: 'NATURAL',
+            properties: 'Weight'
+        }
+    }
+);
+
+// Dirigido. Ultron y Cheetah
+MATCH(source:Villian {Name:'Ultron'})
+MATCH(target:Villian {Name:'Cheetah'})
+CALL gds.shortestPath.dijkstra.write('mDG2',
+{
+    sourceNode: source,
+    targetNodes: target,
+    relationshipWeightProperty: 'Weight',
+    writeRelationshipType: 'shortestPath_dijkstra_d_Ultron_Cheetah',
+    writeNodeIds: true,
+    writeCosts: true
+}
+)
+YIELD relationshipsWritten
+RETURN relationshipsWritten;
+
+// Muestra la nueva relación
+MATCH(n)-[r:shortestPath_dijkstra_d_Ultron_Cheetah]->(m)
+RETURN n,r,m;
+
+// Consulta que muestre los nombres y los ids del camino Ultron a Cheetah
+UNWIND[41,45,46,24,38] as vid
+MATCH(v:Villian)
+WHERE id(v) = vid
+RETURN v.Name(v), id(v);
+
+// Muestra los datos de la nueva relación
+MATCH(n)-[r:shortestPath_dijkstra_d_Ultron_Cheetah]->(m)
+RETURN n.Name, r.nodeIds, r.costs, r.totalCost, m.Name
+ORDER BY r.totalCost DESC;
+
+// paso 1
+MATCH(source:Villian{Name:'Ultron'})-[r:shortestPath_dijkstra_d_Ultron_Cheetah]->(ov:Villian{Name:'Cheetah'})
+RETURN r.nodeIds;
+
+// paso 2
+WITH [id IN [41,45,46,24,38] | gds.util.asNode(id)] AS Nodes
+RETURN Nodes.Name;
+
+// paso 3
+UNWIND range(0, 5-2) as i
+RETURN i;
+
+// paso 4
+MATCH(source:Villian{Name:'Ultron'})-[r:shortestPath_dijkstra_d_Ultron_Cheetah]->(ov:Villian{Name:'Cheetah'})
+WHERE r.nodeIds IS NOT NULL AND size(r.nodeIds)>=2
+WITH [id IN r.nodeIds | gds.util.asNode(id)] AS Nodes
+UNWIND range(0, size(Nodes)-2) as i
+WITH Nodes, Nodes[i] AS n1, Nodes[i+1] AS n2
+MATCH (n1)-[rel:COMPANION]->(n2)
+RETURN n1, rel, n2;
+
+//? EL EJEMPLO
+
+// Directed
+CALL gds.graph.project(
+    'mUG3',
+    'Villian',
+    {COMPANION:
+        {
+            orientation: 'UNDIRECTED',
+            properties: 'Weight'
+        }
+    }
+);
+
+// Dirigido. Flash Rebirth y Deathstroke
+MATCH(source:Villian {Name:'Flash Rebirth'})
+MATCH(target:Villian {Name:'Deathstroke'})
+CALL gds.shortestPath.dijkstra.write('mUG3',
+{
+    sourceNode: source,
+    targetNodes: target,
+    relationshipWeightProperty: 'Weight',
+    writeRelationshipType: 'dijkstra_d',
+    writeNodeIds: true,
+    writeCosts: true
+}
+)
+YIELD relationshipsWritten
+RETURN relationshipsWritten;
+
+// Muestra la nueva relación
+MATCH(n)-[r:dijkstra_d]->(m)
+RETURN n,r,m;
+
+MATCH(source:Villian{Name:'Flash Rebirth'})-[r:dijkstra_d]->(ov:Villian{Name:'Deathstroke'})
+WHERE r.nodeIds IS NOT NULL AND size(r.nodeIds)>=2
+WITH [id IN r.nodeIds | gds.util.asNode(id)] AS Nodes
+UNWIND range(0, size(Nodes)-2) as i
+WITH Nodes, Nodes[i] AS n1, Nodes[i+1] AS n2
+MATCH (n1)-[rel:COMPANION]->(n2)
+RETURN n1, rel, n2;// Undirected
+CALL gds.graph.project(
+    'myUndirectedGraph',
+    'Villian',
+    {COMPANION:
+        {
+            orientation:'UNDIRECTED',
+            properties:'Weight'
+        }
+    }
+);
+
+// Directed
+CALL gds.graph.project(
+    'myDirectedGraph',
+    'Villian',
+    {COMPANION:
+        {
+            orientation:'NATURAL',
+            properties:'Weight'
+        }
+    }
+);
+
+// Minimum Weight Spanning Tree (MWST)
+// Árbol de expansión de peso mínimo (MWST)
+// MWST
+MATCH(source:Villian{Name:'Braniac'})
+CALL gds.spanningTree.write('myUndirectedGraph',
+    {
+        sourceNode: source,
+        relationshipWeightProperty: 'Weight',
+        writeProperty: 'Cost',
+        writeRelationshipType: 'MWST_Brainiac'
+    }
+)
+YIELD effectiveNodeCount
+RETURN effectiveNodeCount;
+
+MATCH(n)-[r:MWST_Brainiac]-(m)
+RETURN n,r,m;
+
+MATCH(v:Villian)
+WHERE NOT ()-[:MWST_Brainiac]-(v)
+RETURN v;
+
+// Node similarity es cuando un nodo se parece en sus relaciones específicas a otro
+CALL gds.nodeSimilarity.stream('myDirectedGraph')
+YIELD node1, node2, similarity
+RETURN  gds.util.asNode(node1).Name AS Villian_1,
+        gds.util.asNode(node2).Name AS Villian_2,
+        similarity
+ORDER BY similarity DESCENDING, Villian_1, Villian_2;
+
+// Nodos comparados
+CALL gds.nodeSimilarity.stats('myDirectedGraph')
+YIELD nodesCompared, similarityPairs;
+
+// Crea una nueva relación entre cada par de nodos y añade el valor como atributo
+CALL gds.nodeSimilarity.write('myDirectedGraph',
+    {
+        writeRelationshipType: 'SIMILAR_Node_Similarity',
+        writeProperty: 'score'
+    }
+)
+YIELD nodesCompared, relationshipsWritten;
+
+// Añadimos un nuevo atributo numérico, con nombre Power, a los villanos
+// Valores entre 1 y 10
+// sin() genera un valor pseudoaleatorio pero determinista
+// abs() evita negativos
+// 27 semilla fija
+MATCH(v:Villian)
+WHERE v.Power IS NULL
+SET v.Power = toInteger(abs(sin(id(v)*27))*10)+1;
+
+// Nuevo subgrafo
+// NULL en lugar de las relaciones porque solo queremos los nodos
+MATCH(v:Villian)
+RETURN gds.graph.project(
+    'mySimilarGraph',
+    v,
+    NULL,
+    {
+        sourceNodeProperties: v {.Power},
+        targetNodeProperties: {}
+    }
+);
+
+// Aplicar en modo Stream
+CALL gds.knn.stream('mySimilarGraph',
+    {
+        topK: 1,
+        nodeProperties: ['Power'],
+        randomSeed: 1337,
+        concurrency: 1,
+        sampleRate: 1.0,
+        deltaThreshold: 0.0
+    }
+)
+YIELD node1, node2, similarity
+RETURN  gds.util.asNode(node1).Name AS Villano_1,
+        gds.util.asNode(node2).Name AS Villano_2,
+        similarity
+ORDER BY similarity ASC, Villano_2, Villano_2;
+
+// Write
+// Crea  una nueva relación SIMILAR_atributos entre cada par de nodos y añade el valor como atributo
+CALL gds.knn.write('mySimilarGraph',
+    {
+        writeRelationshipType: 'SIMILAR_atributos',
+        writeProperty: 'score',
+        topK: 1,
+        randomSeed: 42,
+        concurrency: 1,
+        nodeProperties: ['Power']
+    }
+)
+YIELD nodesCompared, relationshipsWritten// Relaciones
+// -- -[]- --> <-- -[]-> <-[]-
+
+// Propiedades
+// {}
+
+// Crea un
+CREATE (n:Persona{nombre:'Remi'});
+
+// SET
+MATCH (n:Persona{nombre:'Remi'})
+SET n.apellido = 'Heredia';
+
+// REMOVE
+MATCH (n:Persona{nombre:'Remi'})
+REMOVE n.apellido;
+
+// SQL      Similar     Orden Cypher
+// SELECT   RETURN      MATCH
+// FROM     MATCH       WHERE
+// WHERE    WHERE       RETURN
+
+// Crear compu
+CREATE (c:Compu{nombre:'Gabinete1'});
+
+MATCH (c:Compu{nombre:'Gabinete1'})
+CREATE (t:Compu{nombre:'Teclado1'})-[r:SE_CONECTA]->(c);
+MATCH (c:Compu{nombre:'Gabinete1'})
+CREATE (m:Compu{nombre:'Mouse1'})-[r:SE_CONECTA]->(c);
+MATCH (c:Compu{nombre:'Gabinete1'})
+CREATE (p:Compu{nombre:'Monitor1'})-[r:SE_CONECTA]->(c);
+
+
+// Conocidos
+MATCH (n:Persona{nombre:'Remi'})
+RETURN n;
+
+MATCH (n:Persona{nombre:'Remi'})
+CREATE (p:Persona{nombre:'Ivo'})<-[r:CONOCE]-(n);
+MATCH (n:Persona{nombre:'Remi'})
+CREATE (p:Persona{nombre:'Max'})<-[r:CONOCE]-(n);
+MATCH (n:Persona{nombre:'Remi'})
+CREATE (p:Persona{nombre:'Aissa'})<-[r:CONOCE]-(n);
+MATCH (n:Persona{nombre:'Remi'})
+CREATE (p:Persona{nombre:'Ivan'})<-[r:CONOCE]-(n);// REVIEW DE LA TAREA 2_1
+
+// ambas vías
+MATCH(d)-[r]-(m)
+RETURN
+  COUNT(r);
+
+// una sola vía
+MATCH(d)-[r]->(m)
+RETURN
+  COUNT(r);
+
+// amigos de pedro que practican natación
+MATCH(p:Persona {nombre:"Pedro"})-[a:AMIGO_DE]-(amigo:Persona)
+MATCH(amigo)-[r:PRACTICA]->(d:Deporte {nombre:"Natación"})
+RETURN amigo;
+
+MATCH(p:Persona)
+RETURN p.nombre, p.edad;
+
+
+
+// MOVIES
+MATCH (n)
+RETURN labels(n) AS tipo, count(n) AS cantidad
+ORDER BY cantidad DESC;
+
+MATCH ()-[r]->()
+RETURN type(r) AS tipo, count(r) AS cantidad
+ORDER BY cantidad DESC;
+
+
+MATCH (n)
+RETURN count(n) AS total_nodos;
+
+MATCH ()-[r]->()
+RETURN count(r) AS total_relaciones;
+
+
+// Devuelve Tom Hanks
+MATCH (p:Person)
+WHERE p.name = 'Tom Hanks'
+RETURN p;
+
+// Devuelve películas de Tom Hanks y sus películas
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.name = 'Tom Hanks'
+RETURN p, r, m;
+
+// In degree de Tom Hanks
+MATCH (p:Person)-[r]->(m:Movie)
+WHERE p.name = 'Tom Hanks'
+RETURN p.name, COUNT(DISTINCT r) as InDegree;
+
+// Tom Hanks Degrees
+MATCH (p:Person)-[r]-(m:Movie)
+WHERE p.name = 'Tom Hanks'
+RETURN p.name,
+       COUNT(CASE WHEN startNode(r) = p THEN r END) AS OutDegree,
+       COUNT(CASE WHEN endNode(r) = p THEN r END) AS InDegree,
+       COUNT(r) AS Degree;
+
+// O bien
+MATCH (p:Person{name:'Tom Hanks'})
+CALL (p) {
+    WITH p
+    MATCH (p:Person)-[r]->(m:Movie)
+    RETURN COUNT(DISTINCT r) as OutDegree
+}
+CALL (p) {
+    WITH p
+    MATCH (p:Person)<-[r]-(m:Movie)
+    RETURN COUNT(DISTINCT r) as InDegree
+}
+CALL (p) {
+    WITH p
+    MATCH (p:Person)-[r]-(m:Movie)
+    RETURN COUNT(DISTINCT r) as Degree
+}
+RETURN p.name AS Actor, OutDegree, InDegree, Degree;
+
+// 1. Número de películas
+MATCH (n:Movie)
+RETURN labels(n) AS tipo, count(n) AS cantidad
+ORDER BY cantidad DESC;
+// 38
+
+// 2. Películas con año
+MATCH (m:Movie)
+RETURN m.title, m.released;
+
+// 3. Número de actores
+MATCH (n:Person)-[:ACTED_IN]->( )
+RETURN labels(n) AS tipo, count(n) AS cantidad
+ORDER BY cantidad DESC;
+// 172
+
+// 4. Número de directores
+MATCH (n:Person)-[:DIRECTED]-( )
+RETURN labels(n) AS tipo, count(n) AS cantidad
+ORDER BY cantidad DESC;
+// 44
+
+// 5. Número de actores en matrix
+MATCH (n:Person)-[:ACTED_IN]->(m:Movie{title: 'The Matrix'})
+RETURN n;
+// 5
+
+// 6. Promedio de años de lanzamiento de las películas
+MATCH (m:Movie)
+RETURN AVG(m.released);
+// 1998.2894736842109
+
+// 7. Directores con sus películas
+MATCH (n:Person)-[r:DIRECTED]->(m:Movie)
+RETURN n, r, m;
+
+// 8. Actores con cantidad de películas
+MATCH (n:Person)-[r:ACTED_IN]->(m:Movie)
+RETURN n.name, count(m);
+
+// 9. Actor con mayor cantidad de películas
+MATCH (n:Person)-[:ACTED_IN]->(m:Movie)
+RETURN n.name, count(m) AS totalPeliculas
+ORDER BY totalPeliculas DESC
+LIMIT 1;
+// Tom Hanks
+
+// 10. Persona con más relaciones en la BD
+MATCH (n:Person)-[r]-()
+RETURN n.name, count(r) AS totalRelaciones
+ORDER BY totalRelaciones DESC
+LIMIT 1;
+// Tom Hanks
+
+// 11. Película con más actores
+MATCH (m:Movie)<-[r:ACTED_IN]-(n:Person)
+RETURN m.title, count(n) AS totalActores
+ORDER BY totalActores DESC
+LIMIT 1;
+// A Few Good Men
+
+// 12. Camino más corto entre dos actores (Tom Hanks y Keanu Reeves)
+
+
+// 13. Moda: año en el que se estrenaron más pelis
+MATCH (m:Movie)
+RETURN m.released AS year, count(*) AS totalPeliculas
+ORDER BY totalPeliculas DESC
+LIMIT 1;
+// 1999 con 4 películas
+
+// 14. Actor que ha trabajado más con directores diferentes
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(d:Person)
+RETURN a.name, count(DISTINCT d) AS totalDirectores
+ORDER BY totalDirectores DESC
+LIMIT 1;
+// Tom Hanks con 11 directores
+
+// 15. Actor con más coactores diferentes
+MATCH (a:Person)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(c:Person)
+WHERE a <> c
+RETURN a.name, count(DISTINCT c) AS totalCoactores
+ORDER BY totalCoactores DESC
+LIMIT 1;
+// Tom Hanks con 34 coactores// Preguntas a responder 
+
+// 1. ¿Qué pasatiempo es el que practican más personas?
+MATCH (p:Pasatiempo)-[r]-()
+RETURN p.NombrePasatiempo,
+       COUNT(CASE WHEN startNode(r) = p THEN r END) AS OutDegree,
+       COUNT(CASE WHEN endNode(r) = p THEN r END) AS InDegree,
+       COUNT(r) AS Degree
+ORDER BY Degree DESC LIMIT 1;
+
+// 2. Muestra el nombre de dos personas comparten un mismo pasatiempo
+MATCH(pa:Pasatiempo{NombrePasatiempo:'Senderismo'})-[r]-(pe:Persona)
+RETURN pe.Nombre, pa.NombrePasatiempo
+LIMIT 2;
+
+// 3. Muestra el nombre de las personas que tocan guitarra. Ordénalos de forma descendente según su experiencia.  
+MATCH(pa:Pasatiempo{NombrePasatiempo:'Tocar guitarra'})-[r:TIENE]-(pe:Persona)
+RETURN pe.Nombre, pa.NombrePasatiempo, r.Experiencia
+ORDER BY r.Experiencia DESC LIMIT 2;
+
+// 4. ¿Cuántos y cuales son los amigos de Hugo Castillo?
+MATCH(p:Persona{Nombre: 'Hugo Castillo'})-[r:AMIGO]-(pe:Persona)
+RETURN pe.Nombre;
+
+// 5. ¿Qué personas practican Ciclismo de Montaña?
+MATCH(pa:Pasatiempo{NombrePasatiempo:'Ciclismo de monta�a'})-[r]-(pe:Persona)
+RETURN pe.Nombre, pa.NombrePasatiempo;
+
+// 6. ¿Quiénes son amigos de Daniela Rubio?
+MATCH(p:Persona{Nombre: 'Daniela Rubio'})-[r:AMIGO]-(pe:Persona)
+RETURN pe.Nombre;
+
+// 7. ¿Existe una relación de amistad entre Alessia Lombardi y Mario Ruiz?
+
+// 8. ¿Qué pasatiempos tiene más personas asociadas?
+MATCH (p:Pasatiempo)-[r]-()
+RETURN p.NombrePasatiempo,
+       COUNT(CASE WHEN startNode(r) = p THEN r END) AS OutDegree,
+       COUNT(CASE WHEN endNode(r) = p THEN r END) AS InDegree,
+       COUNT(r) AS Degree
+
+// 9. ¿Qué personas tienen mayor experiencia en un pasatiempo concreto de tu elección?
+
+// 10. ¿Quiénes son amigos que además comparten pasatiempos?
+
+// 
+
+// 11. ¿Qué personas tienen múltiples pasatiempos?
+
+// 12. ¿Cuál es el elementId de Patricia Medina?
+
+// 13. ¿Qué pasatiempos son comunes en una red de amigos?
+
+// 14. ¿Cuál es uno de los caminos más cortos entre Alejandro Cruz y Carmen Rivera?
+
+// 15. ¿Cuáles son las tres personas que tienen más amigos?
+
+// 16. ¿Qué personas tienen experiencia menor o igual a 1 en sus pasatiempos?
+
+// 17. ¿Qué pasatiempos solo los practica una sola persona?
+
+// 18. ¿Qué personas son amigas y además tienen el mismo pasatiempo pero diferente experiencia?
+
+// 19. ¿Qué personas no tienen amigos registrados?
+
+// 20. ¿Qué personas podrían recomendar un pasatiempo a un amigo según su experiencia?
+
+//
+MATCH (p:Person)-[r]-(m)
+WHERE p.name = "Clint Eastwood"
+RETURN p, r, m;
+ 
+ 
+//
+MATCH (p:Person)
+WHERE p.name = $nombre
+RETURN p;
+ 
+ 
+//Grafo a dos saltos
+MATCH (p:Person)-[r]-(m)-[r2]-(m2)
+RETURN p, r, m, r2, m2;
+ 
+// Todos los nodos alcanzables a dos saltos
+MATCH (p:Person)-[r*1..2]-(m)
+RETURN p, r, m;
+ 
+// Todos los nodos alcanzables a tres saltos
+MATCH (p:Person)-[r*1..3]-(m)
+RETURN p, r, m;
+ 
+//
+MATCH (p:Person)-[r*1..1]-(m)
+WHERE p.name = 'Kevin Bacon'
+RETURN COUNT(DISTINCT m);
+ 
+ 
+// Todos los nodos alcanzables a dos saltos: 24
+MATCH (p:Person)-[r*1..2]-(m)
+WHERE p.name = 'Kevin Bacon'
+RETURN COUNT(DISTINCT m);
+ 
+// Exactamente alcanzables a dos saltons son: 21
+MATCH (p:Person)-[r*2]-(m)
+WHERE p.name = 'Kevin Bacon'
+RETURN COUNT(DISTINCT m);// Experimentos
+optional match (v1:Villian)
+match (v:Villian)-[r:COMPANION]->(ov:Villian)
+return v,r,ov,v1;
+
+optional match (v1:SuperHero)
+match (v:SuperHero)-[r:FRIEND_OF]->(ov:SuperHero)
+return v,r,ov,v1;
+
+optional match (v1:Villian)
+match (v:Villian)-[r:COMPANION]->(ov:Villian)
+return v,r,ov,v1;
+
+match ()-[r:FRIEND_OF]->()
+return count(DISTINCT r);
+
+match ()-[r:COMPANION]->()
+return count(r);
+
+call db.schema.visualization;
+
+
+// Pasos
+
+// 1. Crea un subgrafo de villanos 
+CALL gds.graph.project(
+    'myGraph',
+    'Villian',
+    'COMPANION',
+    {relationshipProperties:'Weight'}
+);
+
+// 2. Calcular la memoria requerida
+CALL gds.pageRank.write.estimate(
+    'myGraph',
+    {
+        writeProperty: 'pageRank',
+        maxIterations: 20,
+        dampingFactor: 0.85
+    }
+)
+YIELD nodeCount, relationshipCount, bytesMin, bytesMax, requiredMemory;
+
+// 3. Ejecutar el algoritmo
+CALL gds.pageRank.stream('myGraph')
+YIELD nodeId, score
+RETURN gds.util.asNode(nodeId).Name AS Name, score
+ORDER BY score DESC, Name ASC;
+
+// 4. Añadir el atributo nodo
+CALL gds.pageRank.write(
+    'myGraph',
+    {
+        writeProperty: 'pageRank',
+        maxIterations: 20,
+        dampingFactor: 0.85
+    }
+)
+YIELD nodePropertiesWritten, ranIterations;
+
+MATCH (h:SuperHero)
+RETURN h.Name, h.closeness_centrality
+ORDER BY h.closeness_centrality DESC
+LIMIT 5;
